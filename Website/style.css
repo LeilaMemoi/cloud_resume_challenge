@@ -392,3 +392,25 @@ section{
     text-align: center;
   }
   
+  /* VISITOR COUNT */
+  .footer-overall {
+    background-color: black;
+    height: 50px;
+    font-size: large;
+}
+
+.footer-text {
+    color: white;
+    margin-left: 3%;
+    white-space: nowrap;
+    float: left;
+    transform: translateY(50%);
+}
+
+.footer-counter {
+    color: white;
+    margin-left: 2px;
+    white-space: nowrap;
+    float: left;
+    transform: translateY(50%);
+}
