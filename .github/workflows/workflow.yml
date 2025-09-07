@@ -25,9 +25,9 @@ jobs:
           aws s3 sync . s3://my-leila-portfolio-bucket --delete --exact-timestamps
 
       #Invalidate CloudFront cache so changes are visible immediately
-      - name: Invalidate CloudFront cache
-        if: success()
-        run: |
-          aws cloudfront create-invalidation \
-            --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} \
-            --paths "/*"
+      # - name: Invalidate CloudFront cache
+      #   if: success()
+      #   run: |
+      #     aws cloudfront create-invalidation \
+      #       --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} \
+      #       --paths "/*"
