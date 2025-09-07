@@ -3,7 +3,7 @@ name: Deploy to S3
 on:
   push:
     branches:
-      - main   # or 'master' depending on your branch
+      - main   # or 'master'
 
 jobs:
   deploy:
@@ -20,14 +20,12 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-central-1
 
-      - name: Sync files to S3
+      - name: Sync website folder to S3
         run: |
-          aws s3 sync . s3://my-leila-portfolio-bucket --delete --exact-timestamps
+          aws s3 sync website/ s3://my-leila-portfolio-bucket --delete --exact-timestamps
 
-      #Invalidate CloudFront cache so changes are visible immediately
-      # - name: Invalidate CloudFront cache
-      #   if: success()
-      #   run: |
-      #     aws cloudfront create-invalidation \
-      #       --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} \
-      #       --paths "/*"
+      - name: Invalidate CloudFront cache
+        uses: chetan/invalidate-cloudfront-action@v2
+        with:
+          distribution_id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
+          paths: "/*"
