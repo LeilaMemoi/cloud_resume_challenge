@@ -22,10 +22,16 @@ jobs:
 
       - name: Sync website folder to S3
         run: |
-          aws s3 sync Website/ s3://my-leila-portfolio-bucket --delete --exact-timestamps
+          aws s3 sync Website/ s3://my-leila-portfolio-bucket --delete --exact-timestamps --exclude 'node_modules/*'
 
       - name: Invalidate CloudFront cache
-        uses: chetan/invalidate-cloudfront-action@v2
-        with:
-          distribution_id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
-          paths: "/*"
+        if: success()
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} \
+            --paths "/*"
+      # - name: Invalidate CloudFront cache
+      #   uses: chetan/invalidate-cloudfront-action@v2
+      #   with:
+      #     distribution_id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
+      #     paths: "/*"
