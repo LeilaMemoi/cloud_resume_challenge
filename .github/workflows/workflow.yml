@@ -22,7 +22,7 @@ jobs:
 
       - name: Sync website folder to S3
         run: |
-          aws s3 sync cloud_resume_challenge/website/ s3://my-leila-portfolio-bucket --delete --exact-timestamps
+          aws s3 sync cloud_resume_challenge/Website/ s3://my-leila-portfolio-bucket --delete --exact-timestamps
 
       - name: Invalidate CloudFront cache
         uses: chetan/invalidate-cloudfront-action@v2
